@@ -1,16 +1,15 @@
-const process = require('process');
-const fs = require('fs');
+import fs from "fs";
 
 const challengePath = `./challenges/${process.argv[2]}.js`;
 
 if (!process.argv[2]) {
     console.log("Please provide a challenge day as argument!")
-    return;
+    process.exit(0);
 }
 
 if (isNaN(parseInt(process.argv[2]))) {
     console.log("Please provide a number as argument!")
-    return;
+    process.exit(0);
 }
 
 fs.stat(challengePath, (err) => {
