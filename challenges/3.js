@@ -16,26 +16,25 @@ const stringSectionContainsSymbol = (lineString, [lowIndex, highIndex]) => {
   return false;
 };
 
-console.log(
-  "part 1: ",
-  inputData.reduce((prev, curr, index) => {
-    const previous = inputData[index - 1];
-    const next = inputData[index + 1];
-    const numberMatches = curr.matchAll(numberRegex);
-    let aggregatedNumbers = 0;
-    for (const numberMatch of numberMatches) {
-      const number = parseInt(numberMatch[1]);
-      const [lowIndex, highIndex] = numberMatch.indices[0];
-      const [prevChar, nextChar] = [curr[lowIndex - 1], curr[highIndex]];
-      if (
-        (prevChar && prevChar.match(symbolRegex)) ||
-        (nextChar && nextChar.match(symbolRegex)) ||
-        stringSectionContainsSymbol(previous, numberMatch.indices[0]) ||
-        stringSectionContainsSymbol(next, numberMatch.indices[0])
-      ) {
-        aggregatedNumbers += number;
-      }
+const result = inputData.reduce((prev, curr, index) => {
+  const previous = inputData[index - 1];
+  const next = inputData[index + 1];
+  const numberMatches = curr.matchAll(numberRegex);
+  let aggregatedNumbers = 0;
+  for (const numberMatch of numberMatches) {
+    const number = parseInt(numberMatch[1]);
+    const [lowIndex, highIndex] = numberMatch.indices[0];
+    const [prevChar, nextChar] = [curr[lowIndex - 1], curr[highIndex]];
+    if (
+      (prevChar && prevChar.match(symbolRegex)) ||
+      (nextChar && nextChar.match(symbolRegex)) ||
+      stringSectionContainsSymbol(previous, numberMatch.indices[0]) ||
+      stringSectionContainsSymbol(next, numberMatch.indices[0])
+    ) {
+      aggregatedNumbers += number;
     }
-    return prev + aggregatedNumbers;
-  }, 0),
-);
+  }
+  return prev + aggregatedNumbers;
+}, 0);
+
+console.log("Part 1", result);
